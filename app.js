@@ -16,20 +16,20 @@ let bancoDeTarefas = [
 ]
 
 
-const criarItem = (tarefa,status) => {
+const criarItem = (tarefa, status, indice) => {
     const item = document.createElement('label');
         item.classList.add('todo__item');
         item.innerHTML = `
-            <input type="checkbox" ${status}>
+            <input type="checkbox" ${status} data-indice=${indice}>
             <div>${tarefa}</div>
-            <input type="button" value="x">
+            <input type="button" value="x" data-indice=${indice}>
         `
         document.getElementById('todoList').appendChild(item);
 }
 
 const atualizaTela = () => {
     limparTarefas();
-   bancoDeTarefas.forEach(item => criarItem(item.tarefa, item.status));
+   bancoDeTarefas.forEach((item, indice) => criarItem(item.tarefa, item.status, indice));
 } 
 
 const limparTarefas = () => {
@@ -50,7 +50,12 @@ const criarNovaTarefa = (evento) => {
     }
 }
 
-document.getElementById('newItem').addEventListener('keypress', criarNovaTarefa);
+const clickItem = (evento) => {
+    const elementoClicado = evento.target;
+    console.log(elementoClicado);
+}
 
+document.getElementById('newItem').addEventListener('keypress', criarNovaTarefa);
+document.getElementById('todoList').addEventListener('click', clickItem);
 
 atualizaTela();
