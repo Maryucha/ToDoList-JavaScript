@@ -15,7 +15,6 @@ let bancoDeTarefas = [
     }
 ]
 
-
 const criarItem = (tarefa, status, indice) => {
     const item = document.createElement('label');
         item.classList.add('todo__item');
@@ -52,7 +51,24 @@ const criarNovaTarefa = (evento) => {
 
 const clickItem = (evento) => {
     const elementoClicado = evento.target;
-    console.log(elementoClicado);
+    if(elementoClicado.type === 'button') {
+        const indice = elementoClicado.dataset.indice;
+        removerItem(indice);
+    }else if(elementoClicado.type === 'checkbox'){
+        const indice = elementoClicado.dataset.indice;
+        atualizarItem(indice);
+    }
+}
+
+const atualizarItem = (indice) => {
+    //operador ternário
+    bancoDeTarefas[indice].status = bancoDeTarefas[indice].status === '' ? 'checked' : '';
+    atualizaTela();
+}
+
+const removerItem = (indice) => {
+    bancoDeTarefas.splice(indice, 1);
+    atualizaTela();
 }
 
 document.getElementById('newItem').addEventListener('keypress', criarNovaTarefa);
