@@ -12,7 +12,7 @@ let bancoDeTarefas = [
 ]
 
 
-const criarItem = (tarefa,status = '') => {
+const criarItem = (tarefa,status) => {
     const item = document.createElement('label');
         item.classList.add('todo__item');
         item.innerHTML = `
@@ -24,7 +24,7 @@ const criarItem = (tarefa,status = '') => {
 }
 
 const atualizaTela = () => {
-    criarItem('teste 1');
+   bancoDeTarefas.forEach(item => criarItem(item.tarefa));
 } 
 
 
