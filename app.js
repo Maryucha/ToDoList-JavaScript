@@ -8,6 +8,10 @@ let bancoDeTarefas = [
     {
         'tarefa':'estudar Angular',
         'status': 'checked'
+    },
+    {
+        'tarefa':'Netflix Outlander',
+        'status': ''
     }
 ]
 
@@ -24,8 +28,29 @@ const criarItem = (tarefa,status) => {
 }
 
 const atualizaTela = () => {
-   bancoDeTarefas.forEach(item => criarItem(item.tarefa));
+    limparTarefas();
+   bancoDeTarefas.forEach(item => criarItem(item.tarefa, item.status));
 } 
+
+const limparTarefas = () => {
+    const todoList = document.getElementById('todoList');
+    while(todoList.firstChild){
+        todoList.removeChild(todoList.lastChild);
+    }
+}
+
+const criarNovaTarefa = (evento) => {
+    const tecla = evento.key;
+    const tituloTarefa = evento.target.value;
+    if(tecla === 'Enter'){
+        bancoDeTarefas.push({'tarefa': tituloTarefa, 'status': ''});
+        atualizaTela();
+        //limpar a caixa de texto
+        evento.target.value = '';
+    }
+}
+
+document.getElementById('newItem').addEventListener('keypress', criarNovaTarefa);
 
 
 atualizaTela();
